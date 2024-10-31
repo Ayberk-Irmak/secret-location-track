@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Kaydedilen Koordinatlar</title>
+    <style>
+        /* Genel stil */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Kapsayıcı stil */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fe2c55; /* TikTok kırmızı tonu */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Koordinat listesi stil */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        li:hover {
+            background-color: #eaeaea;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Kaydedilen Koordinatlar</h1>
+        <ul>
+            {% for coordinate in coordinates %}
+                {% set parts = coordinate.split(',') %}
+                {% if parts|length == 2 %}
+                    {% set lat_part = parts[0].split(':') %}
+                    {% set lng_part = parts[1].split(':') %}
+                    {% if lat_part|length > 1 and lng_part|length > 1 %}
+                        {% set latitude = lat_part[1].strip() %}
+                        {% set longitude = lng_part[1].strip() %}
+                        <li>
+                            <a href="https://www.google.com/maps?q={{ latitude }},{{ longitude }}" target="_blank">
+                                Latitude: {{ latitude }}, Longitude: {{ longitude }}
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
